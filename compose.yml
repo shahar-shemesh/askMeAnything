@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  secretapi:
+    image: askmeanything:latest
+    tty: true
+    deploy:
+      restart_policy:
+        condition: none
+    secrets:
+      - apikey
+secrets:
+  apikey:
+    external: true

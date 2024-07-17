@@ -1,4 +1,4 @@
-version: "1"
+version: "3"
 
 services:
   askmeanything_db:
@@ -14,8 +14,8 @@ services:
       - db_data:/var/lib/postgresql/data
       
   askmeanything_app:
-    image: askmeanything:latest
     container_name: askmeanything_app
+    image: askmeanything:latest
     build: .
     links:
       - askmeanything_db:db  # Link the app to the db service, creating an alias "db"
@@ -27,6 +27,12 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - askmeanything_db
+    secrets:
+      - apikey
 
 volumes:
   db_data: {}
+
+secrets:
+  apikey:
+    external: true
