@@ -1,20 +1,6 @@
 version: "1"
 
 services:
-  askmeanything_app:
-    image: askmeanything:latest
-    container_name: askmeanything_app
-    build: .
-    links:
-      - askmeanything_db:db  # Link the app to the db service, creating an alias "db"
-    ports:
-      - "4000:4000"
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - DATABASE_URL=${DATABASE_URL}
-    depends_on:
-      - askmeanything_db
-
   askmeanything_db:
     container_name: askmeanything_db
     image: postgres
@@ -26,7 +12,21 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
+      
+  askmeanything_app:
+    image: askmeanything:latest
+    container_name: askmeanything_app
+    build: .
+    links:
+      - askmeanything_db:db  # Link the app to the db service, creating an alias "db"
+    ports:
+      - "4000:4000"
+    command: bash -c "alembic upgrade head && sleep 2 && gunicorn -b :4000 --access-logfile - --error-logfile - askMeAnything:app"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - askmeanything_db
 
 volumes:
   db_data: {}
-    
