@@ -24,9 +24,6 @@ class Question(Base): ## Question represents the questions table
         """ Convert the question object to json serializable dictionary.
         Replaces multiple newlines in the answer with a single space. """
         
-    
-
-## db.create_all() ## create all tables in the database based on the defined models
 
 
 
