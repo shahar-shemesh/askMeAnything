@@ -1,8 +1,14 @@
-from flask import make_response, request, abort
+from flask import jsonify, make_response, request, abort
 import openai
 from app import session
 from app.models import Question
 from app.main import bp
+
+
+@bp.route('/test', methods=['GET'])
+def test():
+    return make_response(jsonify({'message': 'test route'}), 200)
+    
 
 
 client = openai.OpenAI() # Initialize OpenAI client
@@ -23,6 +29,9 @@ def ask_question():
     ## question[:-1].strip().split() ===> Validate the question, it should be non-empty and have more than one word
     if (len(question[:-1].strip().split()) <= 1) or (not question): 
         return abort(400, "Invalid question")    
+    
+    
+    
     
     ## Create a response using OpenAI's model
     response = client.completions.create( 

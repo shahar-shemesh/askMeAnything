@@ -1,9 +1,9 @@
 FROM python:slim
 
 COPY requirements.txt requirements.txt
-#RUN pip install --trusted-host pypi.python.org -r requirements.txt
-RUN pip install -r requirements.txt && pip install python-dotenv
-RUN pip install gunicorn
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+#RUN pip install -r requirements.txt
+RUN pip install python-dotenv && pip install gunicorn
 #RUN pip install waitress
 
 # COPY app app
@@ -14,7 +14,9 @@ RUN pip install gunicorn
 #ENV FLASK_APP=askMeAnything.py
 
 COPY . .
+RUN chmod a+x boot.sh
 
-EXPOSE 5000
+
+EXPOSE 4000
 
 ENTRYPOINT ["./boot.sh"]
