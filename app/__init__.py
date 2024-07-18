@@ -19,21 +19,22 @@ def create_app(config_class=Config):
     app.json.sort_keys = False                           ## disable sorting in json responses
 
     engine = create_engine(config_class.SQLALCHEMY_DATABASE_URI)
-    Session = sessionmaker(bind = engine)
+    Session = sessionmaker(bind = engine)                ## create session factory
     global session
     session = Session()
 
-    from app.errors import bp as errors_bp
+    from app.errors import bp as errors_bp               ## register error handling blueprint
     app.register_blueprint(errors_bp)
     
-    from app.main import bp as main_bp
+    from app.main import bp as main_bp                   ## register main blueprint 
     app.register_blueprint(main_bp)
     
     
     if not app.debug and not app.testing:
         if not os.path.exists('logs'):
             os.mkdir('logs')
-            
+           
+        ## log rotation handler setup   
         file_handler = RotatingFileHandler('logs/askMeAnything.log', maxBytes=10240, backupCount=10)
         
         formatter = utils.CustomFormatter(
