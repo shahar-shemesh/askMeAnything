@@ -47,5 +47,5 @@ def ask_question():
     session.commit()
     
     # return ans store the newly created question and answer as a JSON response
-    current_app.logger.info(f'The newly answered question has been successfully stored. \nThe answered question = {new_question.__repr__()}')
+    current_app.logger.info(f'The newly answered question has been successfully stored. \nThe question = {question}, \nThe model answer: {answer}')
     return make_response(new_question.__repr__(), 201) 
