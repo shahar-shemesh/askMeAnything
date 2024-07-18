@@ -20,7 +20,7 @@ services:
     container_name: askmeanything_app
     build: .
     links:
-      - askmeanything_db:db  # Link the app to the db service, creating an alias "db"
+      - askmeanything_db:db 
     ports:
       - "4000:4000"
     command: bash -c "alembic upgrade head && sleep 2 && gunicorn -b :4000 --access-logfile - --error-logfile - askMeAnything:app"

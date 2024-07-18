@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import current_app, jsonify
 from werkzeug.exceptions import HTTPException
 from app.errors import bp
 
@@ -20,4 +20,5 @@ def handle_exception(err):
         "error": str(err),
         "message": "An Error Occurred"
     }
+    current_app.logger.info(f'Exception: {str(err)}')
     return jsonify(response), 500

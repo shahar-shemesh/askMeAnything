@@ -1,11 +1,11 @@
-from flask import make_response, request, abort
+from flask import make_response, request, abort, current_app
 import openai
 from app import session
 from app.models import Question
 from app.main import bp
 
 
-client = openai.OpenAI() # Initialize OpenAI client
+client = openai.OpenAI()
 
 
 #### Set default parameters for OpenAI model 
@@ -21,11 +21,13 @@ def ask_question():
     try: ### extract and clean the question from the request
         question = (request.get_json()).get('question').strip()
     except:
+        current_app.logger.info(f'500 HTTPException due to JSON structure. \nrequest.get_json() = {request.get_json()}')
         return abort(500, 'Error: Check your payload structure. Payload must be JSON type compatible with the structure: { "question": "<your_question>" } (without obliques)')
     
 
     ## validate the question, should be non empty and more than one word
     if (len(question[:-1].strip().split()) <= 1) or (not question): 
+        current_app.logger.info(f'400 HTTPException due to bad question. \nrequest.get_json() = {request.get_json()}')
         return abort(400, "Error: Question must contain at least 2 words")    
     
     
@@ -44,4 +46,6 @@ def ask_question():
     session.add(new_question)
     session.commit()
     
-    return make_response(new_question.__repr__(), 201) # return the newly created question and answer as a JSON response
+    # return ans store the newly created question and answer as a JSON response
+    current_app.logger.info(f'The newly answered question has been successfully stored. \nThe answered question = {new_question.__repr__()}')
+    return make_response(new_question.__repr__(), 201) 

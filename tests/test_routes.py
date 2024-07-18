@@ -27,11 +27,11 @@ def test_ask_empty_question(client):
     response = client.post('/ask', json=payload)
 
     assert response.status_code == 400
-    # Optionally, check for specific error message
     assert 'must contain at least' in response.text
 
 
 
+# Test for handling invalid URL (404 Bad Request)
 def test_wrong_path(client):
     payload = {'question': 'Who are you?'}
     response = client.post('/', json=payload)
