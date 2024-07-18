@@ -38,7 +38,7 @@ def create_app(config_class=Config):
         
         formatter = utils.CustomFormatter(
             f'%(asctime)s %(levelname)s: \\nmessage: %(message)s '
-            f'\\n(from %(pathname)s:%(lineno)d)\\n{"-"*utils.terminal_half_width()}\\n')
+            f'\\n(from %(pathname)s:%(lineno)d)\\n{"-"*50}\\n')
         
         file_handler.setFormatter(formatter)
         
