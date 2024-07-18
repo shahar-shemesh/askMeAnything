@@ -1,4 +1,4 @@
-version: "3"
+version: "1"
 
 services:
   askmeanything_db:
@@ -12,10 +12,12 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
       
   askmeanything_app:
-    container_name: askmeanything_app
     image: askmeanything:latest
+    container_name: askmeanything_app
     build: .
     links:
       - askmeanything_db:db  # Link the app to the db service, creating an alias "db"
@@ -27,12 +29,17 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - askmeanything_db
+    networks:
+      - app-network
     secrets:
       - apikey
 
 volumes:
   db_data: {}
-
+ 
+networks:
+  app-network:
+  
 secrets:
   apikey:
     external: true

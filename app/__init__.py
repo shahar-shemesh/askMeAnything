@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from config import Config
 
+
 load_dotenv()
 engine = create_engine(os.environ.get("DATABASE_URL"))
 Session = sessionmaker(bind = engine)
