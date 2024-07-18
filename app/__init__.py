@@ -1,17 +1,11 @@
-import os
 from flask import Flask
 from flask_cors import CORS
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from config import Config
 
-
 load_dotenv()
-engine = create_engine(os.environ.get("DATABASE_URL"))
-Session = sessionmaker(bind = engine)
-session = Session()
-
 
 def create_app(config_class=Config):
     
@@ -20,6 +14,10 @@ def create_app(config_class=Config):
     CORS(app)                                     ## enable Cross-Origin resource sharing for the app
     app.json.sort_keys = False                    ## disable sorting in json responses
 
+    engine = create_engine(config_class.SQLALCHEMY_DATABASE_URI)
+    Session = sessionmaker(bind = engine)
+    global session
+    session = Session()
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
@@ -28,7 +26,6 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     
     return app
-    
     
     
 from app import models

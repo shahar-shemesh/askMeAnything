@@ -5,13 +5,19 @@ from app.errors import bp
 
 @bp.app_errorhandler(HTTPException)
 def not_found_error(err):
+
+    response = {
+        f'error_{key}': getattr(err, key, f"Error {key.capitalize()} Not Found")
+        for key in ['code', 'name', 'description']
+    }
+    return jsonify(response), getattr(err, 'code', 400)
+
     
-    return jsonify({
-        "code": err.code,
-        "name": err.name,
-        "description": err.description,
-    })
     
-    """ Error handler for HTTP exceptions.
-    Args: err (HTTPException): The HTTP exception that was raised.
-    Return: Response: A JSON response containing the error code, name, and description. """
+@bp.app_errorhandler(Exception)
+def handle_exception(err):
+    response = {
+        "error": str(err),
+        "message": "An Error Occurred"
+    }
+    return jsonify(response), 500

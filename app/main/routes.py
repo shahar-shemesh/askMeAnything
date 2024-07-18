@@ -1,4 +1,4 @@
-from flask import jsonify, make_response, request, abort
+from flask import make_response, request, abort
 import openai
 from app import session
 from app.models import Question
@@ -20,14 +20,13 @@ def ask_question():
     
     try: ### extract and clean the question from the request
         question = (request.get_json()).get('question').strip()
-        
     except:
-        return abort(500, "error, check your question payload structure.")
+        return abort(500, 'Error: Check your payload structure. Payload must be JSON type compatible with the structure: { "question": "<your_question>" } (without obliques)')
     
 
     ## validate the question, should be non empty and more than one word
     if (len(question[:-1].strip().split()) <= 1) or (not question): 
-        return abort(400, "Invalid question")    
+        return abort(400, "Error: Question must contain at least 2 words")    
     
     
     ## Create a response using OpenAI's model

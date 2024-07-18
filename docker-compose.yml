@@ -31,15 +31,9 @@ services:
       - askmeanything_db
     networks:
       - app-network
-    secrets:
-      - apikey
 
 volumes:
   db_data: {}
  
 networks:
   app-network:
-  
-secrets:
-  apikey:
-    external: true
