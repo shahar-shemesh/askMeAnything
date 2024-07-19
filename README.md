@@ -58,13 +58,20 @@ If the PostgreSQL image already exists on your machine, it is advisable to rebui
     ```bash
     cd "askMeAnything"
     ```
-
-3. **Build and start containers**:
+    
+3. Edit the `.env` file with your OpenAI API key:
+    ```bash
+    ...
+    OPENAI_API_KEY=[your_openai_api_key]
+    ...
+    ```
+    
+4. Build and start containers:
     ```bash
     docker compose up --build
     ```
 
-2. **Access the Flask Application**:
+5. Access the Flask Application:
     - The Flask server will be available at `http://localhost:4000`
     - The database service will be available at `http://localhost:5432`
 
