@@ -51,7 +51,7 @@ If the PostgreSQL image already exists on your machine, it is advisable to rebui
 
 1. Clone this repository to your local machine:
     ```bash
-    git clone  https://github.com/shahar-shemesh/askMeAnything.git
+    git clone https://github.com/shahar-shemesh/askMeAnything.git
     ```
 
 2. Navigate to the directory of the cloned repository:
