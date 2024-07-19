@@ -62,7 +62,7 @@ If the PostgreSQL image already exists on your machine, it is advisable to rebui
 3. Edit the `.env` file with your OpenAI API key:
     ```bash
     ...
-    OPENAI_API_KEY=[your_openai_api_key]
+    OPENAI_API_KEY=<your_openai_api_key>
     ...
     ```
     
