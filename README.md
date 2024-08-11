@@ -2,6 +2,9 @@
 
 ## Overview
 
+![askmeanything](https://github.com/user-attachments/assets/50227105-8382-468d-82fa-e972cfa31af9)
+
+
 ASKMEANYTHING is a Flask-based application that allows users to ask questions, retrieves answers using the OpenAI API, and stores both questions and answers in a PostgreSQL database. The application is containerized using Docker and managed with Docker Compose. It also includes testing with pytest to ensure proper functionality.
 
 ## Directory Details
